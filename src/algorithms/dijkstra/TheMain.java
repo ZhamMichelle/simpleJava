@@ -6,21 +6,29 @@ import java.util.stream.Collectors;
 
 public class TheMain {
     public static void main(String[] args) {
-        Map<String, List<Map<String, Integer>>> graph =
-                Map.of("start", Arrays.asList(Map.of("a", 6, "b", 2)),
-                        "a", Arrays.asList(Map.of("fin", 1)),
-                        "b", Arrays.asList(Map.of("a", 3, "fin", 5)));
+        Map<String, Map<String, Integer>> graph =
+                Map.of("start", Map.of("a", 6, "b", 2),
+                        "a", Map.of("fin", 1),
+                        "b", Map.of("a", 3, "fin", 5));
         double infinity = Double.POSITIVE_INFINITY;
         Map<String, Double> costs = Map.of("a", 6.0, "b", 2.0, "fin", infinity);
         Map<String, String> parents = new HashMap<>();
         parents.put("a", "start");
         parents.put("b", "start");
         parents.put("fin",null);
-        List<String> processed = new ArrayList<>();
-        var node=findLowestCostNode(costs);
+        Map<String,Double> processed = new HashMap<>();
+        Map<String,Double> node=findLowestCostNode(costs);
         while(node !=null){
-//            var cost=costs.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,e->e.getKey().equals(node.g)))
-//       var neighbors=graph.co
+            var cost=costs.get(node);
+       var neighbors=graph.get(node);
+            for (Map.Entry<String,Integer> n:neighbors.entrySet()) {
+                var newCost=cost+neighbors.get(n);
+                if(costs.get(n)>newCost){
+                   costs.put(n.getKey(),newCost);
+                   parents.put(n.getKey(),node.entrySet().iterator().next().getKey());
+                   processed.put(node.entrySet().iterator().next().getKey(),node.entrySet().iterator().next().getValue());
+                }
+            }
         }
         System.out.println();
     }
