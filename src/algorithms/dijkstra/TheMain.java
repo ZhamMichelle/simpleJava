@@ -15,6 +15,8 @@ public class TheMain {
         Map<String, String> parents = new HashMap<>();
         parents.put("a", "start");
         //parents.put("c", "start");
+        //lallalala
+        //blablablabla
         parents.put("b", "start");
         parents.put("fin",null);
         Map<String,Double> processed = new HashMap<>();
