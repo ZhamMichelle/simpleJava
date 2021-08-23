@@ -14,6 +14,7 @@ public class TheMain {
         Map<String, Double> costs = Map.of("a", 6.0, "b", 2.0, "fin", infinity);
         Map<String, String> parents = new HashMap<>();
         parents.put("a", "start");
+        //parents.put("c", "start");
         parents.put("b", "start");
         parents.put("fin",null);
         List<String> processed = new ArrayList<>();
