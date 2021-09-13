@@ -1,5 +1,6 @@
 package algorithms.dijkstra;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -49,18 +50,27 @@ public class ExercizeA {
                 if(newCost<costs.get(item.getKey())){
                     costs.put(item.getKey(),newCost);
                     parents.put(item.getKey(),node.getKey());
-                    proceed.add(item.getKey());
+                    proceed.add(node.getKey());
                 }
             }
+            System.out.println("proceed: "+proceed);
             node=TakeMinValue.minValue(costs.entrySet().stream()
                     .filter(z-> !proceed.contains(z.getKey())).collect(Collectors.toMap(
                             Map.Entry::getKey,Map.Entry::getValue
                     )));
         }
         System.out.println(costs);
+
+
+        Calendar eveningDate=Calendar.getInstance();
+        eveningDate.setTime(new Date());
+        System.out.println(eveningDate.getTime().getHours());
+
+
     }
 
     public Map<String,Double> getMinValue(Map<String,Double> costs){
+        System.out.println("min costs: "+costs);
         return costs.entrySet().stream().min(Comparator.comparing(Map.Entry::getValue))
                 .stream().collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue));
     }
