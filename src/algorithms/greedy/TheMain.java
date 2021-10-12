@@ -32,12 +32,10 @@ public class TheMain {
         String best_station = null;
         Set<String> states_covered = new HashSet<>();
         for (Map.Entry<String, Set<String>> station : stations.entrySet()) {
-            System.out.println("station: " + station);
             var covered = Stream.concat(states_covered.stream(), station.getValue().stream())
                     .collect(Collectors.toSet());
             if (covered.size() > states_covered.size()) {
                 best_station = station.getKey();
-                System.out.println("best_station: " + best_station);
                 final_stations.add(best_station);
                 states_covered = covered;
             }
