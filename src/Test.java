@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -46,14 +48,16 @@ public class Test {
         var second = Optional.ofNullable(first).orElse(Collections.emptyList()).stream()
                 .filter(z -> !z.equals(null))
                 .collect(Collectors.toList());
-        System.out.println(second);
+//        System.out.println(second);
 
         var third = Stream.ofNullable(zero)
                 .flatMap(Collection::stream)
                 .filter(z -> !z.equals(null))
                 .collect(Collectors.toList());
-        System.out.println(third);
+//        System.out.println(third);
 
+        var test= zero.stream().reduce((f,s)->s).orElseThrow();
+        System.out.println(test);
     }
 
 
