@@ -86,12 +86,19 @@ public class TheMain {
 //            var names = new ArrayList<>(weightArray.get(id).getName());
 //            names.add(sub.getName());
             if (col == 0) {
-                System.out.println("0:"+weightArray);
-                System.out.println("0:"+id);
                 weightArray.put(id, new CalculatedWeight(List.of(calculatedWeight), List.of(sub.getName())));
+                System.out.println("0: " + id);
+                System.out.println("0: " + col);
+                System.out.println("0: " + weightArray.get(id));
             }else{
-                System.out.println(weightArray.get(1).getWeight());
-                ArrayList<Integer> sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
+                ArrayList<Integer> sumWeights=new ArrayList<>();
+                try{
+                    sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
+                }catch(NullPointerException e){
+                    System.out.println(id);
+                    System.out.println(col);
+                    System.out.println(weightArray.get(id));
+                }
                 sumWeights.add(calculatedWeight);
                 weights = new CalculatedWeight(sumWeights, names);
                 weightArray.replace(id, weights);
