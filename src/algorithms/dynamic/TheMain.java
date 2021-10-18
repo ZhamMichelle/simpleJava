@@ -38,67 +38,71 @@ public class TheMain {
 
         if (id != 0) {
             int previousCost = result[id - 1][col];
+            System.out.println("Start id41: " + id);
+            System.out.println("Start col41: " + col);
+            System.out.println(weightArray.get(id - 1).getWeight());
+            System.out.println(weightArray);
             int previousWeight = weightArray.get(id - 1).getWeight().get(col);
-
+            int leftCost = 0;
+            int leftWeight = 0;
+            if (col != 0) {
+                leftCost = result[id][col - 1];
+                leftWeight = weightArray.get(id).getWeight().get(col - 1);
+            }
 
             var sumWeight = previousWeight + currentWeight;
+            System.out.println("previousWeight " + previousWeight + ", currentWeight " + currentWeight + ", weight " + weight);
+            System.out.println("previousCost " + previousCost + ", currentCost " + currentCost);
+            System.out.println("leftCost " + leftCost + ", leftWeight " + leftWeight);
             var sumCost = previousCost + currentCost;
 
             if (sumWeight <= weight) {
                 var names = new ArrayList<>(weightArray.get(id - 1).getName());
                 names.add(sub.getName());
-                addToArray(id, col, sub, sumWeight, names);
+                addToArray(id, col, sumWeight, names);
                 return sumCost;
+            } else if (leftCost > previousCost) {
+                addToArray(id, col, leftWeight, List.of(sub.getName()));
+                return leftCost;
             } else if (previousCost > currentCost && currentWeight <= weight) {
-                addToArray(id, col, sub, previousWeight, weightArray.get(id - 1).getName());
+                addToArray(id, col, previousWeight, weightArray.get(id - 1).getName());
                 return previousCost;
             } else if (currentWeight <= weight) {
-                addToArray(id, col, sub, currentWeight, List.of(sub.getName()));
+                addToArray(id, col, currentWeight, List.of(sub.getName()));
                 return sub.getCost();
             } else {
-                return -1;
+                addToArray(id, col, previousWeight, List.of(sub.getName()));
+                return previousCost;
             }
 
         } else {
             if (currentWeight <= weight) {
-                addToArray(id, col, sub, currentWeight, List.of());
+                addToArray(id, col, currentWeight, List.of(sub.getName()));
                 return sub.getCost();
             } else {
-                addToArray(id, col, sub, 0, List.of());
+                addToArray(id, col, 0, List.of(sub.getName()));
                 return 0;
             }
         }
     }
 
-    public static void addToArray(int id, int col, Subject sub, Integer calculatedWeight, List<String> names) {
+    public static void addToArray(int id, int col, Integer calculatedWeight, List<String> names) {
         CalculatedWeight weights;
         if (id == 0) {
-            weights = new CalculatedWeight(List.of(calculatedWeight), List.of(sub.getName()));
             if (col == 0) {
+                weights = new CalculatedWeight(List.of(calculatedWeight), names);
                 weightArray.put(id, weights);
             } else {
                 var sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
                 sumWeights.add(calculatedWeight);
-                weights = new CalculatedWeight(sumWeights, List.of(sub.getName()));
+                weights = new CalculatedWeight(sumWeights, names);
                 weightArray.replace(id, weights);
             }
         } else {
-//            var names = new ArrayList<>(weightArray.get(id).getName());
-//            names.add(sub.getName());
             if (col == 0) {
-                weightArray.put(id, new CalculatedWeight(List.of(calculatedWeight), List.of(sub.getName())));
-                System.out.println("0: " + id);
-                System.out.println("0: " + col);
-                System.out.println("0: " + weightArray.get(id));
-            }else{
-                ArrayList<Integer> sumWeights=new ArrayList<>();
-                try{
-                    sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
-                }catch(NullPointerException e){
-                    System.out.println(id);
-                    System.out.println(col);
-                    System.out.println(weightArray.get(id));
-                }
+                weightArray.put(id, new CalculatedWeight(List.of(calculatedWeight), names));
+            } else {
+                ArrayList<Integer> sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
                 sumWeights.add(calculatedWeight);
                 weights = new CalculatedWeight(sumWeights, names);
                 weightArray.replace(id, weights);
