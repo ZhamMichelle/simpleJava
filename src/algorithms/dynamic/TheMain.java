@@ -94,32 +94,25 @@ public class TheMain {
     public static void addToArray(int id, int col, Integer calculatedWeight, ArrayList<String> names) {
         CalculatedWeight weights;
         arr.get(id).get(col).addAll(names);
+        System.out.println("arr: " + arr.get(id).get(col));
         if (id == 0) {
             if (col == 0) {
                 weights = new CalculatedWeight(List.of(calculatedWeight), arr);
                 weightArray.put(id, weights);
-                System.out.println("FUCK arr " + arr);
-                System.out.println("FUCK weightArray " + weightArray);
             } else {
                 var sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
                 sumWeights.add(calculatedWeight);
                 weights = new CalculatedWeight(sumWeights, arr);
                 weightArray.replace(id, weights);
-                System.out.println("FUCK arr " + arr);
-                System.out.println("FUCK weightArray " + weightArray);
             }
         } else {
             if (col == 0) {
                 weightArray.put(id, new CalculatedWeight(List.of(calculatedWeight), arr));
-                System.out.println("FUCK arr " + arr);
-                System.out.println("FUCK weightArray " + weightArray);
             } else {
                 ArrayList<Integer> sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
                 sumWeights.add(calculatedWeight);
                 weights = new CalculatedWeight(sumWeights, arr);
                 weightArray.replace(id, weights);
-                System.out.println("FUCK arr " + arr);
-                System.out.println("FUCK weightArray " + weightArray);
             }
 
         }
