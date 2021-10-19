@@ -45,8 +45,6 @@ public class TheMain {
             int previousCost = result[id - 1][col];
             System.out.println("Start id41: " + id);
             System.out.println("Start col41: " + col);
-            System.out.println(weightArray.get(id - 1).getWeight());
-            System.out.println(weightArray);
             int previousWeight = weightArray.get(id - 1).getWeight().get(col);
             int leftCost = 0;
             int leftWeight = 0;
@@ -56,23 +54,19 @@ public class TheMain {
             }
 
             var sumWeight = previousWeight + currentWeight;
-            System.out.println("previousWeight " + previousWeight + ", currentWeight " + currentWeight + ", weight " + weight);
-            System.out.println("previousCost " + previousCost + ", currentCost " + currentCost);
-            System.out.println("leftCost " + leftCost + ", leftWeight " + leftWeight);
             var sumCost = previousCost + currentCost;
 
-            if (sumWeight <= weight) {
-                var names = weightArray.get(id - 1).getName().get(id).get(col);
+            if (sumWeight <= weight && previousWeight!=0) {
+                var names = weightArray.get(id - 1).getName().get(id-1).get(col);
                 names.add(sub.getName());
                 addToArray(id, col, sumWeight, names);
                 return sumCost;
             } else if (leftCost > previousCost) {
                 var names = weightArray.get(id).getName().get(id).get(col-1);
-                System.out.println("left names: " + names);
                 addToArray(id, col, leftWeight, names);
                 return leftCost;
             } else if (previousCost > currentCost && currentWeight <= weight) {
-                var names = weightArray.get(id - 1).getName().get(id).get(col);
+                var names = weightArray.get(id - 1).getName().get(id-1).get(col);
                 addToArray(id, col, previousWeight, names);
                 return previousCost;
             } else if (currentWeight <= weight) {
@@ -80,7 +74,7 @@ public class TheMain {
                 addToArray(id, col, currentWeight,names);
                 return sub.getCost();
             } else {
-                var names = weightArray.get(id - 1).getName().get(id).get(col);
+                var names = weightArray.get(id - 1).getName().get(id-1).get(col);
                 addToArray(id, col, previousWeight, names);
                 return previousCost;
             }
@@ -99,27 +93,33 @@ public class TheMain {
 
     public static void addToArray(int id, int col, Integer calculatedWeight, ArrayList<String> names) {
         CalculatedWeight weights;
-        System.out.println("names: " + names);
         arr.get(id).get(col).addAll(names);
         if (id == 0) {
             if (col == 0) {
-
                 weights = new CalculatedWeight(List.of(calculatedWeight), arr);
                 weightArray.put(id, weights);
+                System.out.println("FUCK arr " + arr);
+                System.out.println("FUCK weightArray " + weightArray);
             } else {
                 var sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
                 sumWeights.add(calculatedWeight);
                 weights = new CalculatedWeight(sumWeights, arr);
                 weightArray.replace(id, weights);
+                System.out.println("FUCK arr " + arr);
+                System.out.println("FUCK weightArray " + weightArray);
             }
         } else {
             if (col == 0) {
                 weightArray.put(id, new CalculatedWeight(List.of(calculatedWeight), arr));
+                System.out.println("FUCK arr " + arr);
+                System.out.println("FUCK weightArray " + weightArray);
             } else {
                 ArrayList<Integer> sumWeights = new ArrayList<>(weightArray.get(id).getWeight());
                 sumWeights.add(calculatedWeight);
                 weights = new CalculatedWeight(sumWeights, arr);
                 weightArray.replace(id, weights);
+                System.out.println("FUCK arr " + arr);
+                System.out.println("FUCK weightArray " + weightArray);
             }
 
         }
@@ -133,57 +133,6 @@ public class TheMain {
         subjects.put(4, new Subject("fifth", 2, 1));
         subjects.put(5, new Subject("sixth", 6, 9));
     }
-
 }
 
-class Subject {
-    private String name;
-    private int weight;
-    private int cost;
 
-    public Subject(String name, int weight, int cost) {
-        this.name = name;
-        this.weight = weight;
-        this.cost = cost;
-    }
-
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public String getName() {
-        return name;
-    }
-}
-
-class CalculatedWeight {
-    private List<Integer> weight;
-    private Map<Integer,ArrayList<ArrayList<String>>> name;
-
-    public CalculatedWeight(List<Integer> weight, Map<Integer,ArrayList<ArrayList<String>>> name) {
-        this.weight = weight;
-        this.name = name;
-    }
-
-    public List<Integer> getWeight() {
-        return weight;
-    }
-
-    public Map<Integer,ArrayList<ArrayList<String>>> getName() {
-        return name;
-    }
-
-
-    @Override
-    public String toString() {
-        return "SubResult{" +
-                "weight=" + weight +
-                ", name=" + name +
-                '}';
-    }
-}

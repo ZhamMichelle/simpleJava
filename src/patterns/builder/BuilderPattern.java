@@ -1,4 +1,4 @@
-package patterns;
+package patterns.builder;
 
 public class BuilderPattern {
     private int id;
