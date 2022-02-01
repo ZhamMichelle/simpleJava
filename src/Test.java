@@ -44,11 +44,20 @@ public class Test {
 //
 
         var zero = List.of("smth", "sdas");
-        var first = List.of();
-        var second = Optional.ofNullable(first).orElse(Collections.emptyList()).stream()
-                .filter(z -> !z.equals(null))
-                .collect(Collectors.toList());
-//        System.out.println(second);
+//        var first = List.of();
+//        var second = Optional.ofNullable(first).orElse(Collections.emptyList()).stream()
+//                .filter(z -> !z.equals(null))
+//                .collect(Collectors.toList());
+////        System.out.println(second);
+//
+//        var third = Stream.ofNullable(zero)
+//                .flatMap(Collection::stream)
+//                .filter(z -> !z.equals(null))
+//                .collect(Collectors.toList());
+////        System.out.println(third);
+//
+//        var test= zero.stream().reduce((f,s)->s).orElseThrow();
+//        System.out.println(test);
 
         var third = Stream.ofNullable(zero)
                 .flatMap(Collection::stream)
@@ -56,8 +65,6 @@ public class Test {
                 .collect(Collectors.toList());
 //        System.out.println(third);
 
-        var test= zero.stream().reduce((f,s)->s).orElseThrow();
-        System.out.println(test);
     }
 
 
