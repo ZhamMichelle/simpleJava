@@ -59,11 +59,32 @@ public class Test {
 //        var test= zero.stream().reduce((f,s)->s).orElseThrow();
 //        System.out.println(test);
 
-        var third = Stream.ofNullable(zero)
-                .flatMap(Collection::stream)
-                .filter(z -> !z.equals(null))
-                .collect(Collectors.toList());
+//        var third = Stream.ofNullable(zero)
+//                .flatMap(Collection::stream)
+//                .filter(z -> !z.equals(null))
+//                .collect(Collectors.toList());
 //        System.out.println(third);
+
+//        var params = List.of("f", "e");
+//        StringBuilder template = new StringBuilder();
+//        params.forEach(template::append);
+//        System.out.println(template);
+//        var test = new StringBuilder();
+//
+//        var first = List.of("one", "two", "three", "four");
+//        var second = List.of("two", "three");
+//        var third = first.stream()
+//                .filter(z -> z.equals("two") || z.equals("three"))
+//                .collect(Collectors.toList());
+//
+//        var forth=new ArrayList<>();
+//        forth.add("8");
+//        var fifth = new ArrayList<String>();
+//        System.out.println(forth.addAll(second));
+//        System.out.println(forth);
+
+        System.out.println(Math.ceil(2));
+
 
     }
 

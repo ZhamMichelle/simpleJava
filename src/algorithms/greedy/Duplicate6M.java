@@ -6,7 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TheMain {
+public class Duplicate6M {
+
     public static void main(String[] args) {
         Set<String> states_needed = new HashSet<>();
         states_needed.add("mt");
@@ -18,7 +19,6 @@ public class TheMain {
         states_needed.add("ca");
         states_needed.add("az");
 
-
         Map<String, Set<String>> stations = Map.of(
                 "kone", Set.of("id", "nv", "ut"),
                 "ktwo", Set.of("wa", "id", "mt"),
@@ -26,22 +26,22 @@ public class TheMain {
                 "kfour", Set.of("nv", "ut"),
                 "kfive", Set.of("ca", "az")
         );
-        Set<String> final_stations = new HashSet<>();
+
+        Set<String> states_final = new HashSet<>();
 
         while (!states_needed.isEmpty()) {
             Set<String> states_covered = new HashSet<>();
             for (Map.Entry<String, Set<String>> station : stations.entrySet()) {
-                var covered = Stream.concat(states_covered.stream(), station.getValue().stream())
-                        .collect(Collectors.toSet());
+                var covered =
+                        Stream.concat(station.getValue().stream(), states_covered.stream())
+                                .collect(Collectors.toSet());
                 if (covered.size() > states_covered.size()) {
-                    final_stations.add(station.getKey());
-                    states_covered = covered;
+                    states_covered.addAll(covered);
+                    states_final.add(station.getKey());
+                    states_needed.removeAll(station.getValue());
                 }
             }
-            System.out.println("states_covered: " + states_covered);
-            states_needed.removeAll(states_covered);
-            System.out.println("states_needed: " + states_needed);
         }
-        System.out.println("final_stations: " + final_stations);
+        System.out.println("final stations: " + states_final);
     }
 }

@@ -21,11 +21,11 @@ public class TheMain {
         parents.put("b", "start");
         parents.put("fin", null);
         Map<String, Double> processed = new HashMap<>();
-        Box<String,Double> node = Box.findLowestCostNode(costs);
+        Box<String, Double> node = Box.findLowestCostNode(costs);
 
         while (node != null) {
             var cost = costs.get(node.getKey());
-            if(graph.get(node.getKey())==null){
+            if (graph.get(node.getKey()) == null) {
                 break;
             }
             var neighbors = graph.get(node.getKey());
@@ -40,34 +40,36 @@ public class TheMain {
                     processed.put(node.getKey(), node.getValue());
                 }
             }
-            node=Box.findLowestCostNode(costs.entrySet().stream().filter(z-> !processed.containsKey(z.getKey()))
-                    .collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue)));
+            node = Box.findLowestCostNode(costs.entrySet().stream().filter(z -> !processed.containsKey(z.getKey()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
         }
         System.out.println(costs);
         System.out.println(parents);
     }
 }
 
-        class Box<T,V> {
-            private T key;
-            private V value;
+class Box<T, V> {
+    private final T key;
+    private final V value;
 
-            public Box(T key, V value) {
-                this.key = key;
-                this.value = value;
-            }
+    public Box(T key, V value) {
+        this.key = key;
+        this.value = value;
+    }
 
-            public static Box findLowestCostNode(Map<String, Double> costs) {
-                double min = costs.entrySet().stream().mapToDouble(x -> x.getValue()).min().orElseThrow(NoSuchElementException::new);
-                var entrySet = costs.entrySet().stream().filter(z -> z.getValue() == min).findFirst().get();
-                return new Box(entrySet.getKey(), entrySet.getValue());
-            }
+    public static Box findLowestCostNode(Map<String, Double> costs) {
+        double min = costs.values().stream().mapToDouble(aDouble -> aDouble).min().orElseThrow(NoSuchElementException::new);
+        var entrySet =
+                costs.entrySet().stream()
+                .filter(z -> z.getValue() == min).findFirst().get();
+        return new Box(entrySet.getKey(), entrySet.getValue());
+    }
 
-            public T getKey() {
-                return key;
-            }
+    public T getKey() {
+        return key;
+    }
 
-            public V getValue() {
-                return value;
-            }
-        }
+    public V getValue() {
+        return value;
+    }
+}

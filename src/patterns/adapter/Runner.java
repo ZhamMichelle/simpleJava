@@ -13,4 +13,8 @@ public class Runner {
     public void runOnTheRoad(){
         road.run();
     }
+
+    public void test(){
+        System.out.println(this.getClass().getSimpleName());
+    }
 }
