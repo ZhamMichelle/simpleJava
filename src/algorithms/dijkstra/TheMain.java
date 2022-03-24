@@ -40,8 +40,10 @@ public class TheMain {
                     processed.put(node.getKey(), node.getValue());
                 }
             }
-            node = Box.findLowestCostNode(costs.entrySet().stream().filter(z -> !processed.containsKey(z.getKey()))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+            node = Box.findLowestCostNode(
+                    costs.entrySet().stream()
+                            .filter(z -> !processed.containsKey(z.getKey()))
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
         }
         System.out.println(costs);
         System.out.println(parents);
@@ -61,7 +63,7 @@ class Box<T, V> {
         double min = costs.values().stream().mapToDouble(aDouble -> aDouble).min().orElseThrow(NoSuchElementException::new);
         var entrySet =
                 costs.entrySet().stream()
-                .filter(z -> z.getValue() == min).findFirst().get();
+                        .filter(z -> z.getValue() == min).findFirst().get();
         return new Box(entrySet.getKey(), entrySet.getValue());
     }
 
