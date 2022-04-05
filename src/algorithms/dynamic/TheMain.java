@@ -3,11 +3,11 @@ package algorithms.dynamic;
 import java.util.*;
 
 public class TheMain {
-    private static Map<Integer, Subject> subjects = new HashMap<>();
+    private static final Map<Integer, Subject> subjects = new HashMap<>();
     private final static int constanta = 6;
     private static int[][] result;
-    private static Map<Integer, CalculatedWeight> weightArray = new LinkedHashMap<>();
-    private static Map<Integer,ArrayList<ArrayList<String>>> arr = new HashMap<>();
+    private static final Map<Integer, CalculatedWeight> weightArray = new LinkedHashMap<>();
+    private static final Map<Integer,ArrayList<ArrayList<String>>> arr = new HashMap<>();
     public static void main(String[] args) {
         loadSubs();
         result = new int[subjects.size()][constanta];
@@ -57,30 +57,30 @@ public class TheMain {
             var sumCost = previousCost + currentCost;
 
             if (sumWeight <= weight && previousWeight!=0) {
-                var names = weightArray.get(id - 1).getName().get(id-1).get(col);
+                var names = weightArray.get(id - 1).getNames().get(id-1).get(col);
                 names.add(sub.getName());
                 addToArray(id, col, sumWeight, names);
                 return sumCost;
             } else if (leftCost > previousCost) {
-                var names = weightArray.get(id).getName().get(id).get(col-1);
+                var names = weightArray.get(id).getNames().get(id).get(col-1);
                 addToArray(id, col, leftWeight, names);
                 return leftCost;
             } else if (previousCost > currentCost && currentWeight <= weight) {
-                var names = weightArray.get(id - 1).getName().get(id-1).get(col);
+                var names = weightArray.get(id - 1).getNames().get(id-1).get(col);
                 addToArray(id, col, previousWeight, names);
                 return previousCost;
             } else if (currentWeight <= weight) {
-                var names=new ArrayList(List.of(sub.getName()));
+                var names=List.of(sub.getName());
                 addToArray(id, col, currentWeight,names);
                 return sub.getCost();
             } else {
-                var names = weightArray.get(id - 1).getName().get(id-1).get(col);
+                var names = weightArray.get(id - 1).getNames().get(id-1).get(col);
                 addToArray(id, col, previousWeight, names);
                 return previousCost;
             }
 
         } else {
-            var names = new ArrayList(List.of(sub.getName()));
+            var names = List.of(sub.getName());
             if (currentWeight <= weight) {
                 addToArray(id, col, currentWeight, names);
                 return sub.getCost();
@@ -91,7 +91,7 @@ public class TheMain {
         }
     }
 
-    public static void addToArray(int id, int col, Integer calculatedWeight, ArrayList<String> names) {
+    public static void addToArray(int id, int col, Integer calculatedWeight, List<String> names) {
         CalculatedWeight weights;
         arr.get(id).get(col).addAll(names);
         System.out.println("arr: " + arr.get(id).get(col));

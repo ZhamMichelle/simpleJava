@@ -6,19 +6,19 @@ import java.util.Map;
 
 public class CalculatedWeight {
     private List<Integer> weight;
-    private Map<Integer,ArrayList<ArrayList<String>>> name;
+    private Map<Integer,ArrayList<ArrayList<String>>> names;
 
-    public CalculatedWeight(List<Integer> weight, Map<Integer,ArrayList<ArrayList<String>>> name) {
+    public CalculatedWeight(List<Integer> weight, Map<Integer,ArrayList<ArrayList<String>>> names) {
         this.weight = weight;
-        this.name = name;
+        this.names = names;
     }
 
     public List<Integer> getWeight() {
         return weight;
     }
 
-    public Map<Integer,ArrayList<ArrayList<String>>> getName() {
-        return name;
+    public Map<Integer,ArrayList<ArrayList<String>>> getNames() {
+        return names;
     }
 
 
@@ -26,7 +26,7 @@ public class CalculatedWeight {
     public String toString() {
         return "SubResult{" +
                 "weight=" + weight +
-                ", name=" + name +
+                ", name=" + names +
                 '}';
     }
 }

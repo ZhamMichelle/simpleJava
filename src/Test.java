@@ -82,8 +82,8 @@ public class Test {
 //        var fifth = new ArrayList<String>();
 //        System.out.println(forth.addAll(second));
 //        System.out.println(forth);
-
-        System.out.println(Math.ceil(2));
+boolean isUpperCaseLetter =false;
+        System.out.println("when.today" + (isUpperCaseLetter ? "" : ".lower"));
 
 
     }
