@@ -25,54 +25,59 @@ public class ExersizeA {
 //                getMaxCost(finalI, col++, cell);
 //            });
 //        }
-        System.out.println(calculatedParams);
+        calculatedParams.forEach(cp->{
+            System.out.println(cp.toString());
+        });
     }
 
     private static void getMaxCost(int id, int col, int cellWeight) {
         Subject sub = subjects.get(id);
         int currentCost = sub.getCost();
         int currentWeight = sub.getWeight();
-
+        try {
         if (id == 0) {
             var names = List.of(sub.getName());
             if (currentWeight <= cellWeight) {
                 addToArray(id, col, currentWeight, names, sub.getCost());
             } else {
-                addToArray(id, col, 0, names, 0);
+                addToArray(id, col, 0, null, 0);
             }
         } else {
-            var previousParamById = getPreviousParam(id-1, col);
-            var previousParamByCol = getPreviousParam(id, col-1);
+            var previousParamById = getPreviousParam(id - 1, col);
 
             int previousCost = previousParamById.getSumCost();
             int previousWeight = previousParamById.getWeights().get(col);
             int leftCost = 0;
             int leftWeight = 0;
             if (col != 0) {
+                var previousParamByCol = getPreviousParam(id, col - 1);
                 leftCost = previousParamByCol.getSumCost();
-                leftWeight =previousParamByCol.getWeights().get(col-1);
+                leftWeight = previousParamByCol.getWeights().get(col - 1);
             }
             var sumWeight = previousWeight + currentWeight;
             var sumCost = previousCost + currentCost;
 
-            if (sumWeight <= cellWeight && previousWeight!=0) {
-                var names = previousParamById.getNames();
+            if (sumWeight <= cellWeight && previousWeight != 0) {
+                var names = new ArrayList<>(previousParamById.getNames());
                 names.add(sub.getName());
                 addToArray(id, col, sumWeight, names, sumCost);
             } else if (leftCost > previousCost) {
-                var names = previousParamByCol.getNames();
+                var names = getPreviousParam(id, col - 1).getNames();
                 addToArray(id, col, leftWeight, names, leftCost);
             } else if (previousCost > currentCost && currentWeight <= cellWeight) {
                 var names = previousParamById.getNames();
                 addToArray(id, col, previousWeight, names, previousCost);
             } else if (currentWeight <= cellWeight) {
-                var names=List.of(sub.getName());
-                addToArray(id, col, currentWeight,names, sub.getCost());
+                var names = List.of(sub.getName());
+                addToArray(id, col, currentWeight, names, sub.getCost());
             } else {
                 var names = previousParamById.getNames();
                 addToArray(id, col, previousWeight, names, previousCost);
             }
         }
+    }catch (Exception e){
+            System.out.println(e.getMessage());
+    }
     }
 
     public static void addToArray(int id, int col, Integer calculatedWeight, List<String> names, int sumCost) {
@@ -80,7 +85,7 @@ public class ExersizeA {
         if (col == 0) {
             params = new CalculatedParams(id, col, List.of(calculatedWeight), names, sumCost);
         } else {
-            var sumWeights = new ArrayList<>(getPreviousParam(id, col).getWeights());
+            var sumWeights = new ArrayList<>(getPreviousParam(id, col-1).getWeights());
             sumWeights.add(calculatedWeight);
             params = new CalculatedParams(id, col, sumWeights, names, sumCost);
         }
